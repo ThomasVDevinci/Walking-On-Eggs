@@ -1,0 +1,7 @@
+train: C:\Users\tomva\Downloads\mine-recog.yolov8\train\images
+val: C:\Users\tomva\Downloads\mine-recog.yolov8\valid\images
+test: C:\Users\tomva\Downloads\mine-recog.yolov8\test\images
+
+names:
+  0: circular
+  1: butterfly
