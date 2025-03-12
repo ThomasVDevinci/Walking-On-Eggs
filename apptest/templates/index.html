@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take a Photo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Prendre une photo avec votre caméra</h1>
+
+        <video id="video" width="640" height="480" autoplay></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+        <br>
+        <button id="captureUpload">Acquérir</button>
+
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" style="display: none;">
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+            <input type="file" id="fileInput" name="file" style="display: none;">
+            <button type="submit" id="submitBtn">Upload Photo</button>
+        </form>
+    </div>
+
+    <script>
+        // Accéder à la caméra
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                document.getElementById('video').srcObject = stream;
+            })
+            .catch(function (err) {
+                console.log("Error accessing webcam: " + err);
+            });
+
+        // Capture d'une image et soumission du formulaire
+        document.getElementById('captureUpload').addEventListener('click', function () {
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convertir l'image capturée en base64 et la mettre dans l'input hidden
+            var dataUrl = canvas.toDataURL('image/png');
+            var fileInput = document.getElementById('fileInput');
+            dataUrlToBlob(dataUrl, function(blob) {
+                var file = new File([blob], "photo.png", { type: "image/png" });
+                var dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+
+                // Soumettre le formulaire après la capture
+                document.getElementById('uploadForm').submit();
+            });
+        });
+
+        // Convertir une image en base64 en blob
+        function dataUrlToBlob(dataUrl, callback) {
+            var arr = dataUrl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while (n--) u8arr[n] = bstr.charCodeAt(n);
+            callback(new Blob([u8arr], { type: mime }));
+        }
+
+        // Obtenir la géolocalisation
+        navigator.geolocation.getCurrentPosition(function(position) {
+            document.getElementById('latitude').value = position.coords.latitude;
+            document.getElementById('longitude').value = position.coords.longitude;
+        });
+    </script>
+</body>
+</html>

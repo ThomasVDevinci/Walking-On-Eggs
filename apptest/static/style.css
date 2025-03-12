@@ -1,0 +1,69 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2d2f33;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Titre principal */
+h1 {
+    color: #d1e300;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Style des boutons */
+button {
+    background-color: #4c8f23;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #366f16;
+}
+
+/* Style de la vidéo et de l'image */
+video {
+    border: 5px solid #4c8f23;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+img {
+    max-width: 100%;
+    border: 5px solid #4c8f23;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style de la carte */
+iframe {
+    border: 2px solid #4c8f23;
+    border-radius: 10px;
+}
+
+/* Style du bouton de nouvelle capture */
+.new-capture-btn {
+    margin-top: 20px;
+}
+
+/* Alignement général */
+h3 {
+    color: #d1e300;
+    font-size: 1.5em;
+    margin-top: 20px;
+}

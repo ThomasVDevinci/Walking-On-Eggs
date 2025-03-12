@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Résultats de la détection</h1>
+
+        <h3>Coordonnées GPS</h3>
+        <p>Latitude : {{ latitude }}</p>
+        <p>Longitude : {{ longitude }}</p>
+
+        <h3>Photo Capturée</h3>
+        <img src="data:image/jpeg;base64,{{ img_base64 }}" alt="Captured Image" />
+
+        <div class="new-capture-btn">
+            <a href="{{ url_for('index') }}">
+                <button>Nouvelle Capture</button>
+            </a>
+        </div>
+
+        <h3>Carte</h3>
+        <iframe src="{{ url_for('static', filename='map.html') }}" width="100%" height="500px"></iframe>
+    </div>
+</body>
+</html>
